@@ -9,7 +9,8 @@ pipeline {
         }
         stage('Checkout SCM') {
             steps {
-                sh "git clone https://github.com/anwar132005-boop/b3depogithub.git"
+                //sh "git clone https://github.com/anwar132005-boop/b3depogithub.git"
+                git branch: 'main', url: 'https://github.com/anwar132005-boop/b3depogithub.git'
             }
         }
     }
