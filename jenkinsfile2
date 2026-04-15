@@ -9,7 +9,7 @@ pipeline {
     stage('checkout SCM') {
             steps {
                // sh "git clone https://github.com/WooD3Nz/SRCops.git"
-                git branch: 'main', credentialsId: 'admin', url: 'https://github.com/WooD3Nz/SRCops.git'
+                git branch: 'main', credentialsId: 'etudiant', url: 'https://github.com/anwar132005-boop/b3depogithub.git'
                 //git branch: 'main', credentialsId: '12cda8db-12cb-458a-8b2f-e124a2063c38', url: 'https://github.com/WooD3Nz/SRCops.git'
             }
         }
@@ -28,7 +28,7 @@ pipeline {
  
 
                     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+                    https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
                     | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
  
