@@ -20,8 +20,6 @@ pipeline {
                     sudo apt upgrade -y
                     sudo apt install ca-certificates curl gnupg lsb-release -y
 
- 
-
                     sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /tmp/docker.gpg
                     sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg /tmp/docker.gpg
 
