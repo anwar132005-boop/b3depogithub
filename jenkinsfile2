@@ -8,7 +8,7 @@ pipeline {
          }
         stage('Cloner le GitHub'){
            steps {
-                 git branch: 'main', credentialsId: 'etudiant' url: 'https://github.com/anwar132005-boop/b3depogithub.git'
+                 git branch: 'main', credentialsId: 'etudiant' , url: 'https://github.com/anwar132005-boop/b3depogithub.git'
             }
          }
            stage('install Docker'){
