@@ -20,7 +20,7 @@ pipeline {
                   sh 'sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg /tmp/docker.gpg'
                   sh 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
                       https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null'
-                  sh 'sudo apt install docker-ce docker.io containerd.io -y'
+                  sh 'sudo apt install docker-ce docker.io docker-ce-cli containerd.io -y'
                   sh 'sudo apt update'
                   sh 'sudo chmod 666 /var/run/docker.sock'
                   sh 'sudo usermod -aG docker $USER'
