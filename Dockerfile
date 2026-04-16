@@ -31,7 +31,7 @@ RUN echo 'PubkeyAuthentication yes' >> /etc/ssh/sshd_config
 
 # Exposer Apache + SSH
 EXPOSE 80 22
-
+COPY mysite /var/www/html
 RUN echo "root:password" | chpasswd
 
 # Demarrage de SSH (Apache sera lance manuellement ou via Ansible)
