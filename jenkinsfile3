@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout-SCM') {
+            steps {
+                cleanWs()
+                git branch: 'main', 
+                    credentialsId: 'etudiant', 
+                    url: 'https://github.com/anwar132005-boop/b3depogithub.git'
+            }
+        }
+
+        stage('Build Nginx Image') {
+            steps {
+                sh 'docker build -t mon-nginx .'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
