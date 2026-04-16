@@ -1,39 +1,34 @@
 pipeline {
     agent any
     stages {
-         stage('ChekOut-SCM') {
+        stage('CheckOut-SCM') {
             steps {
-                cleanWs ()
+                cleanWs()
                 git branch: 'main', credentialsId: 'etudiant', url: 'https://github.com/anwar132005-boop/b3depogithub.git'
             }
-         }
-         stage('Create-conteneur') {
-             steps {
-                sh 'docker stop contapache01 && docker rm contapache01'
-                sh 'docker run -d -- name contapache01 -- hostname contapache01 -v ./volumecontapache01:/var/www/html -- network macvlan192 -- ip 192.168.1.20 mon-apache2'
-                sh 'docker start contapache01'
-                sh 'docker ps && docker exec contapache01 "ifconfig"'
-                sh 'docker exec contapache01 service ssh start'
-                sh 'docker exec contapache01 /etc/init.d/apache2 start'
-                sh 'docker exec contapache01 /etc/init.d/apache2 status'
-            }
-         }
-        stage('Copy-fichiers-mysite-dans-contapache01') {
-             steps {
-                sh 'docker stop contapache01 && docker rm contapache01'
-                sh 'docker run -d -- name contapache01 -- hostname contapache01 -v ./volumecontapache01:/var/www/html -- network macvlan192 -- ip 192.168.1.20 mon-apache2'
-                sh 'docker start contapache01'
-                sh 'docker ps && docker exec contapache01 "ifconfig"'
-                sh 'docker exec contapache01 service ssh start'
-                sh 'docker exec contapache01 /etc/init.d/apache2 start'
-                sh 'docker exec contapache01 /etc/init.d/apache2 status'
-              }
-          }
-       stage('copy-fichiers-mysite') {
+        }
+        stage('Create-conteneur') {
             steps {
                 sh '''
-                   sudo cp -r ./mysite/* .volumecontapache01
-                   sudo ls /var/www/html
+                    docker stop contapache01 || true
+                    docker rm contapache01 || true
+                    docker run -d --name contapache01 --hostname contapache01 -v ./volumecontapache01:/var/www/html --network macvlan192 --ip 192.168.1.20 mon-apache2
+                    docker start contapache01
+                    docker ps
+                    docker exec contapache01 ifconfig
+                    docker exec contapache01 service ssh start || true
+                    docker exec contapache01 /etc/init.d/apache2 start || true
+                    docker exec contapache01 /etc/init.d/apache2 status
                 '''
-     }
+            }
+        }
+        stage('Copy-fichiers-mysite-dans-contapache01') {
+            steps {
+                sh '''
+                    docker cp ./mysite/. contapache01:/var/www/html/
+                    docker exec contapache01 ls -la /var/www/html
+                '''
+            }
+        }
+    }
 }
